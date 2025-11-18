@@ -1,6 +1,8 @@
 import { configureStore, combineReducers, type ThunkAction, type Action } from "@reduxjs/toolkit";
+import driverReducer from "./driver/driverSlice";
 
 const rootReducer = combineReducers({
+    driver: driverReducer
 });
 
 export const store = configureStore({
