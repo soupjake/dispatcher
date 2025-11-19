@@ -1,14 +1,14 @@
 import { Router } from "express"
-import { getDrivers, getDriver } from "../db"
+import { getAvailableDrivers, getDriver } from "../db"
 
 export const driver = Router()
 
 driver.get('/', (req, res) => {
   try {
-    const drivers = getDrivers()
+    const drivers = getAvailableDrivers()
 
     if (!drivers.length) {
-        res.status(404).send({ error: "No drivers" })
+        res.status(404).send({ error: "No available drivers" })
         return
     }
     
@@ -45,6 +45,23 @@ driver.get('/:id', (req, res) => {
     }
     
     res.status(200).send(driver)
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({ error: e })
+  }
+});
+
+driver.post('/nearest', (req, res) => {
+  try {
+    const drivers = getAvailableDrivers()
+
+
+    if (!drivers.length) {
+        res.status(404).send({ error: "No available drivers" })
+        return
+    }
+    
+    res.status(200).send(drivers)
   } catch (e) {
     console.log(e);
     res.status(500).send({ error: e })

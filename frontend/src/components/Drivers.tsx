@@ -5,6 +5,7 @@ import {
     selectDriversLoading,
 } from '../store/driver/driverSelectors'
 import List from 'antd/es/list'
+import { DriverItem } from './DriverItem'
 
 export const Drivers = () => {
     const drivers = useAppSelector(selectDrivers)
@@ -23,14 +24,7 @@ export const Drivers = () => {
         <List
             itemLayout="vertical"
             dataSource={drivers}
-            renderItem={(driver) => (
-            <List.Item>
-                <List.Item.Meta
-                    title={driver.name}
-                    description={<p>{`Id: ${driver.id} Status: ${driver.status}`}</p>}
-                />
-            </List.Item>
-            )}
+            renderItem={DriverItem}
         />
     )
 }

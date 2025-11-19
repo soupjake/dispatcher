@@ -15,14 +15,11 @@ export const Driver = () => {
     const error = useAppSelector(selectDriversError)
     const { id } = useParams()
 
-    console.log("weee", id)
-
     useEffect(() => {
         if (id) {
             dispatch(fetchDriverById(id))
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id])
+    }, [id, dispatch])
 
     if (loading) {
         return <div>Loading...</div>

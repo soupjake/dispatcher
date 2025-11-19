@@ -1,6 +1,7 @@
 import Database from "better-sqlite3";
 import { v4 as uuid } from "uuid";
 import { Driver } from "./types/driver";
+import { getRandomStatus } from "./utils/utils";
 
 const db = new Database(':memory:')
 
@@ -34,21 +35,16 @@ function seedData() {
       `Driver ${i + 1}`,
       baseLat + Math.random() / 100,
       baseLng + Math.random() / 100,
-      randomStatus()
+      getRandomStatus()
     )
   }
 
   console.log("Seeded drivers")
 }
 
-function randomStatus() {
-  const statuses = ["available", "busy", "offline"]
-  return statuses[Math.floor(Math.random() * statuses.length)]
-}
-
-export function getDrivers() {
+export function getAvailableDrivers() {
   const select = db.prepare(`
-    SELECT * FROM drivers
+    SELECT * FROM drivers WHERE status = 'available'
   `)
 
   return select.all() as Driver[]
