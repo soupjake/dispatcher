@@ -37,3 +37,7 @@ export function calculateQuote(distance: number, time: number) {
 
   return baseRate + (distance * pricePerKm) + (time * pricePerMin)
 }
+
+export function sleep(time: number) {
+  return new Promise((resolve) => setTimeout(resolve, time))
+}

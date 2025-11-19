@@ -6,7 +6,7 @@ export const QuoteDetails = () => {
     const loading = useAppSelector(selectUserLoading)
 
     if (loading) {
-        <p>Loading quote...</p>
+        return <p>Loading quote...</p>
     }
 
     return <p>{`Quote: ${quote}`}</p>

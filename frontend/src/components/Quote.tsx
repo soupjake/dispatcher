@@ -22,9 +22,9 @@ export const Quote = () => {
     }, [dispatch])
 
     const onOk = useCallback(() => {
-        socket.emit("requestRide");
+        socket.emit("requestRide", selected?.id);
         dispatch(setSelected(undefined))
-    }, [dispatch])
+    }, [selected, dispatch])
 
     return (
         <Modal

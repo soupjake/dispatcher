@@ -1,5 +1,6 @@
 import { Server, Socket } from "socket.io";
 import type { Server as HTTPServer } from "http";
+import { sleep } from "../utils/utils";
 
 let io: Server | null = null;
 
@@ -14,20 +15,16 @@ export function initSocket(server: HTTPServer) {
     if (io) {
       console.log("Socket connected:", socket.id)
 
-      socket.on("requestRide", () => {
+      socket.on("requestRide", async (id: string) => {
         console.log("Driver search started");
 
-        io!.emit("ride_update", {
-          status: "searching",
-        });
-      });
+        io!.emit("ride_update", "searching");
 
-      socket.on("driverAccepted", () => {
-        console.log("Driver accepted ride");
+        console.log(`Contacting driver ${id}`)
 
-        io!.emit("ride_update", {
-          status: "driver_accepted",
-        });
+        await sleep(500)
+
+        io!.emit("ride_update", "driver accepted");
       });
     }
   });
@@ -35,6 +32,3 @@ export function initSocket(server: HTTPServer) {
   console.log("Socket.IO initialized")
 };
 
-export function emitEvent(event: string) {
-    io!.emit(event)
-}

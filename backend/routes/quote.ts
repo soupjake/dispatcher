@@ -1,11 +1,10 @@
 import { Router } from "express"
-import { getAvailableDrivers, getDriver } from "../db"
-import { calculateDistance, calculateQuote, calculateTime } from "../utils/utils";
-import { emitEvent } from "../sockets/socket";
+import { getAvailableDrivers } from "../db"
+import { calculateDistance, calculateQuote, calculateTime, sleep } from "../utils/utils";
 
 export const quote = Router()
 
-quote.post('/', (req, res) => {
+quote.post('/', async (req, res) => {
   try {
     console.info(req.body)
 
@@ -48,6 +47,8 @@ quote.post('/', (req, res) => {
     const price = `£${quote.toFixed(2)}`
 
     console.info(`Price: ${price}`)
+
+    await sleep(1000);
     
     res.status(200).send(price)
   } catch (e) {

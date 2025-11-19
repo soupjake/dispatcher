@@ -4,13 +4,14 @@ import { setStatus } from "../store/user/userSlice";
 import { selectUserStatus } from "../store/user/userSelectors";
 import { socket } from "../services/socket";
 import type { UserStatus } from "../types/UserStatus";
+import { Button } from "antd";
 
 export const Status = () => {
     const dispatch = useAppDispatch()
     const status = useAppSelector(selectUserStatus)
 
     const handleStatus = useCallback((status: UserStatus) => {
-        dispatch(setStatus(status));
+      dispatch(setStatus(status));
     }, [dispatch])
 
     useEffect(() => {
@@ -21,7 +22,16 @@ export const Status = () => {
         };
     }, [handleStatus, dispatch]);
 
+    const onClick = useCallback(() => {
+      dispatch(setStatus("riding"))
+    }, [dispatch])
+
   return (
-    <p>{status}</p>
+    <>
+      <p>{status}</p>
+      {status === "driver accepted" ? (
+        <Button type="primary" onClick={onClick}>Accept Ride</Button>
+      ) : null}
+    </>
   );
 }
